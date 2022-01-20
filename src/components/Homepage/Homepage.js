@@ -11,21 +11,24 @@ import { useDispatch } from "react-redux";
 import { Button } from "@mui/material";
 import { generateWallet } from "../GenerateAndRestoreWalletModal/Reducer";
 import lightwallet from "eth-lightwallet";
+import { useNavigate } from "react-router-dom";
 
 function LightWallet() {
   const dispatch = useDispatch();
   const password = generateString(generatedPasswordLength);
   const extraEntropy = generateString(generatedPasswordLength);
   const seed = lightwallet.keystore.generateRandomSeed(extraEntropy);
+  const navigate = useNavigate();
 
   return (
     <div>
       <Button
         onClick={() => {
+          navigate("/seed");
           dispatch(
             generateWallet({
-              HDPathString: "m/44'/60'/0'/0",
-              seed: seed,
+              hdPathString: `m/44'/60'/0'/0`,
+              seedPhrase: seed,
               password: password,
               open: true,
             })

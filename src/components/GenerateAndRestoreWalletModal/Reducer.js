@@ -4,8 +4,8 @@ export const walletSlice = createSlice({
   name: "Auth",
   initialState: {
     value: {
-      HDPathString: "m/44'/60'/0'/0",
-      seed: "",
+      hdPathString: `m/44'/60'/0'/0`,
+      seedPhrase: "",
       password: "",
       open: false,
     },

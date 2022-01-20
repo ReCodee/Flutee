@@ -3,16 +3,22 @@ import { useSelector, useDispatch } from "react-redux";
 import "./GenerateWalletModal.css";
 import { Button, Modal, Box, Typography, Alert } from "@mui/material";
 import { generateWallet } from "./Reducer";
+import { useNavigate } from "react-router-dom";
 
 function GenerateWalletModal() {
   const state = useSelector((state) => state.Auth.value);
   const dispatch = useDispatch();
   const handleClose = () => {
     dispatch(
-      generateWallet(state.HDPathString, state.seed, state.password, false)
+      generateWallet(
+        state.hdPathString,
+        state.seedPhrase,
+        state.password,
+        false
+      )
     );
   };
-
+  const navigate = useNavigate();
   return (
     <div className="generate_wallet_modal">
       <div className="generate_modal">
@@ -28,14 +34,24 @@ function GenerateWalletModal() {
               <b>
                 Copy the generated seed to a safe location.
                 <br />
-                HDPathString: {state.HDString}.
+                HDPathString: {state.hdPathString}
                 <br /> Recover lost password using the seed.
               </b>
             </Alert>
             <br />
-            <Alert severity="success">{state.seed}</Alert>
+            <Alert severity="success">{state.seedPhrase}</Alert>
             <br />
             <Alert severity="info">{state.password}</Alert>
+            <br />
+            <div className="next_button">
+              <Button
+                onClick={() => {
+                  navigate("/wallet");
+                }}
+              >
+                Next
+              </Button>
+            </div>
           </div>
         </Modal>
       </div>

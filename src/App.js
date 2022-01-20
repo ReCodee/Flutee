@@ -2,6 +2,9 @@ import * as React from "react";
 import "./App.css";
 import GenerateWalletModal from "./components/GenerateAndRestoreWalletModal/GenerateWalletModal";
 import LightWallet from "./components/Homepage/Homepage";
+import Wallet from "./components/WalletView/Wallet";
+import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
+
 function App() {
   const style = {
     position: "absolute",
@@ -14,12 +17,14 @@ function App() {
     boxShadow: 24,
     p: 4,
   };
-
   return (
-    <div className="App">
-      <LightWallet />
-      <GenerateWalletModal />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LightWallet />} />
+        <Route path="/seed" element={<GenerateWalletModal />} />
+        <Route path="/wallet" element={<Wallet />} />
+      </Routes>
+    </Router>
   );
 }
 
