@@ -1,6 +1,6 @@
 import React from "react";
 import { generate_vault } from "../GenerateAndRestoreWalletModal/Keystore-Lightwallet";
-import { keyFromPasswordPromise } from "../GenerateAndRestoreWalletModal/Keystore-Lightwallet";
+import { getParam } from "../GenerateAndRestoreWalletModal/Keystore-Lightwallet";
 import { useSelector } from "react-redux";
 
 export default function Wallet() {
@@ -11,12 +11,14 @@ export default function Wallet() {
     hdPathString: state.hdPathString,
   };
   const ks = generate_vault(param);
-  const pwDerivedKey = keyFromPasswordPromise(param.password, ks);
+  const params = getParam();
   //const address = ks.generateNewAddress(pwDerivedKey, 1);
-  console.log(pwDerivedKey);
+  console.log(param.seedPhrase);
   return (
     <div>
-      <h1>Wallet Is Here {state.hdPathString}</h1>
+      <h2> Your Ethereum Wallet is :</h2>
+      <br />
+      <h2> {params.address}</h2>
     </div>
   );
 }

@@ -2,6 +2,8 @@ import lightwallet from "eth-lightwallet";
 
 
 var PasswordDerivedKey;
+var Address;
+var PrivateKey;
 export function generate_vault(param) {
   return new Promise(function (myResolve, myReject) {
     lightwallet.keystore.createVault(param, (err, ks) => {
@@ -19,13 +21,18 @@ export function generate_vault(param) {
         PasswordDerivedKey = pwDerivedKey;
         var address = ks.getAddresses()[0];
         var prv_key = ks.exportPrivateKey(address, pwDerivedKey);
-
+        Address = address;
+        PrivateKey = prv_key;
         console.log("address and key: ", address, prv_key);
       });
     });
   });
 }
 
-export function keyFromPasswordPromise(param, ks) {
-  return PasswordDerivedKey;
+export function getParam() {
+  return {
+    pwDerivedKey: PasswordDerivedKey,
+    address: Address,
+    private_key: PrivateKey,
+  };
 }
