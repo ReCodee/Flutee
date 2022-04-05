@@ -8,6 +8,8 @@ export const walletSlice = createSlice({
       seedPhrase: "",
       password: "",
       open: false,
+      publicKey: "",
+      privateKey: "not now"
     },
   },
   reducers: {
@@ -16,5 +18,8 @@ export const walletSlice = createSlice({
     },
   },
 });
+
+
+
 
 export const { generateWallet } = walletSlice.actions;

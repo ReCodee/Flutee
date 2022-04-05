@@ -1,24 +1,47 @@
-import React from "react";
-import { generate_vault } from "../GenerateAndRestoreWalletModal/Keystore-Lightwallet";
-import { getParam } from "../GenerateAndRestoreWalletModal/Keystore-Lightwallet";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import KeystoreLightwallet, { generateVault } from "../GenerateAndRestoreWalletModal/KeystoreLightwallet";
+import { getParams } from "../GenerateAndRestoreWalletModal/KeystoreLightwallet";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getBalance } from "../AccountMonitor/BalanceMonitor";
+import axios from "../AccountMonitor/BalanceMonitor";
+import "./Wallet.css";
+import Header from "../Header/Header";
+import { render } from "@testing-library/react";
+import { generateWallet } from "../GenerateAndRestoreWalletModal/Reducer";
 
 export default function Wallet() {
+   
   const state = useSelector((state) => state.Auth.value);
-  const param = {
-    password: state.password,
-    seedPhrase: state.seedPhrase,
-    hdPathString: state.hdPathString,
-  };
-  const ks = generate_vault(param);
-  const params = getParam();
-  //const address = ks.generateNewAddress(pwDerivedKey, 1);
-  console.log(param.seedPhrase);
-  return (
+  const [balance, setBalance] = useState(0);
+  const sol = getParams();
+  console.log(state.seedPhrase);
+  console.log(getParams().address);
+  console.log(sol.address);
+  useEffect(() => {
+     async function fetchBalance() {
+       const checkbalance = await axios.get("/api", {
+         params: {
+           module: "account",
+           action: "balance",
+           address: sol.address,
+           tag: "latest",
+           apikey: "G46BB2QS9NA9I8IJJCT5MPAQSQ8R5IHTA9"
+         }
+       });
+       console.log(checkbalance.data);
+       setBalance(checkbalance.data.result)
+     }
+     fetchBalance();
+  }, [])
+  return ( 
     <div>
-      <h2> Your Ethereum Wallet is :</h2>
+      <Header  />
+      <h2> Your Ethereum Wallet address is : {sol.address}</h2>
       <br />
-      <h2> {params.address}</h2>
+      <h2> Your Balance is: {balance}</h2>
+      <br />
+      <h2> Other tokens that you hold are : </h2> 
     </div>
   );
 }

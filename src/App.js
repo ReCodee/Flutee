@@ -4,6 +4,7 @@ import GenerateWalletModal from "./components/GenerateAndRestoreWalletModal/Gene
 import LightWallet from "./components/Homepage/Homepage";
 import Wallet from "./components/WalletView/Wallet";
 import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
+import TransactionMonitor from "./components/AccountMonitor/TransactionMonitor";
 
 function App() {
   const style = {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/" element={<LightWallet />} />
         <Route path="/seed" element={<GenerateWalletModal />} />
         <Route path="/wallet" element={<Wallet />} />
+        <Route path="/transactions" element={<TransactionMonitor />} />
       </Routes>
     </Router>
   );

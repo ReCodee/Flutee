@@ -31,6 +31,8 @@ function LightWallet() {
               seedPhrase: seed,
               password: password,
               open: true,
+              publicKey: "",
+              privateKey: "not now"
             })
           );
         }}

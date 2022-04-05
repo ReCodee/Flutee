@@ -4,17 +4,26 @@ import "./GenerateWalletModal.css";
 import { Button, Modal, Box, Typography, Alert } from "@mui/material";
 import { generateWallet } from "./Reducer";
 import { useNavigate } from "react-router-dom";
+import { generateVault } from "./KeystoreLightwallet";
 
 function GenerateWalletModal() {
   const state = useSelector((state) => state.Auth.value);
   const dispatch = useDispatch();
+  const args = {
+    password : state.password,
+    seedPhrase : state.seedPhrase,
+    hdPathString: state.hdPathString
+  }
+  generateVault(args);
   const handleClose = () => {
     dispatch(
       generateWallet(
         state.hdPathString,
         state.seedPhrase,
         state.password,
-        false
+        false,
+        "",
+        "not now"
       )
     );
   };
